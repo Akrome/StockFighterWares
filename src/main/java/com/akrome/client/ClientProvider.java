@@ -1,4 +1,13 @@
 package com.akrome.client;
 
-public class ClientProvider {
+import com.google.inject.Provider;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+
+public class ClientProvider implements Provider<Client> {
+    @Override
+    public Client get() {
+        return ClientBuilder.newClient();
+    }
 }
