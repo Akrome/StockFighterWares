@@ -19,6 +19,7 @@ public class OrderRoutes {
         Response response = webtarget.request().post(Entity.json(orderBean));
         if (response.getStatus() == Response.Status.OK.getStatusCode()) {
             OrderResponseBean orderResponseBean = response.readEntity(OrderResponseBean.class);
+            if (!orderResponseBean.ok) System.out.println(orderResponseBean.error);
             return orderResponseBean.ok;
         }
         else {

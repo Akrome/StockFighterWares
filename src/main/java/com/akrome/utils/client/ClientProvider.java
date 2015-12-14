@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.inject.Provider;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -13,9 +14,17 @@ import javax.ws.rs.ext.ContextResolver;
 public class ClientProvider implements Provider<Client> {
     @Override
     public Client get() {
-        return ClientBuilder.newBuilder()
+        return ClientBuilder
+                .newBuilder()
                 .register(new ObjectMapperResolver())
-                .newClient();
+                .register(new AbstractBinder() {
+                    @Override
+                    protected void configure() {
+                        bind(new ApiKeyProvider().provide()).to(String.class).named(ApiKeyProvider.API_KEY_NAME);
+                    }
+                })
+                .register(ClientAuthFilter.class)
+                .build();
     }
 
 
