@@ -1,10 +1,10 @@
-package com.akrome.client;
+package com.akrome.utils.client;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
+import com.google.inject.name.Names;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 
 public class ClientModule extends AbstractModule {
     @Override
